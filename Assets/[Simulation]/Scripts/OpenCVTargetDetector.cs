@@ -2,6 +2,7 @@ using UnityEngine;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.ImgprocModule;
 using OpenCVForUnity.UnityUtils;
+using Rect = UnityEngine.Rect;
 
 public class OpenCVTargetDetector : MonoBehaviour
 {
