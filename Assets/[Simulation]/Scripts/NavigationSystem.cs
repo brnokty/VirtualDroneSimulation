@@ -1,39 +1,31 @@
-using System;
 using UnityEngine;
 
 public class NavigationSystem : MonoBehaviour
 {
-    [HideInInspector] public GameObject[] waypoints;
-    public float waypointTolerance = 1.0f;
-
-    private int currentIndex = 0;
-
-    private void Start()
-    {
-        waypoints = GameObject.FindGameObjectsWithTag("TargetPoint");
-
-    }
+    private GameObject currentTarget;
+    public float waypointTolerance = 1.5f;
 
     public Vector3 GetCurrentTarget()
     {
-        if (waypoints == null || waypoints.Length == 0)
+        if (currentTarget == null)
             return transform.position;
 
-        Vector3 target = waypoints[currentIndex].transform.position;
-
-        if (Vector3.Distance(transform.position, target) < waypointTolerance)
-        {
-            currentIndex = Mathf.Min(currentIndex + 1, waypoints.Length - 1);
-        }
-
-        return target;
+        return currentTarget.transform.position;
     }
-    
-    // NavigationSystem.cs
-    public void SetNewTarget(GameObject newWaypoint)
+
+    public void SetTargetIfNotSet(GameObject newTarget)
     {
-        waypoints = new GameObject[] { newWaypoint };
-        currentIndex = 0;
+        if (currentTarget == null)
+            currentTarget = newTarget;
     }
 
+    public void SetNewTarget(GameObject newTarget)
+    {
+        currentTarget = newTarget;
+    }
+
+    public void ClearTarget()
+    {
+        currentTarget = null;
+    }
 }
